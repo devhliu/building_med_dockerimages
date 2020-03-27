@@ -36,10 +36,8 @@ mv $HOME/temp/mrtrix3-$VERSION/bin $MRTRIX3_DIR
 mv $HOME/temp/mrtrix3-$VERSION/lib $MRTRIX3_DIR
 mv $HOME/temp/mrtrix3-$VERSION/share $MRTRIX3_DIR
 mv $HOME/temp/mrtrix3-$VERSION/matlab $MRTRIX3_DIR
-# move mrtrix3 python package into annaconda3 site package
-if [ -e $ANACONDA_DIR ]; then
-	mv $MRTRIX3_DIR/lib/mrtrix3	$ANACONDA3/lib/python3.7/site-packages
-fi
+
+cd $HOME
 rm -rf $HOME/temp/mrtrix3-$VERSION
 
 # get PROFILE

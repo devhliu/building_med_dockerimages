@@ -56,20 +56,16 @@ else
 	echo "export PATH=$ANACONDA3_DIR/bin:\$PATH" >> $PROFILE
 fi
 
-#install hedconv dependencies:
-#	pydicom #installed when install nipype 
-#	nipype  #installed by my script
-#	nibabel #installed when install nipype
-#	dcmstack #pip install 
 source $PROFILE
 
 # add conda mirror
 if $USING_MIRROR; then
-    cp ./02_install_anaconda3_mirror.condarc $HOME/.condarc
+	SCRIPT_DIR=dirname $BASH_SOURCE
+    cp $SCRIPT_DIR/02_install_anaconda3_mirror.condarc $HOME/.condarc
+	python -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 fi
 conda update --all
 conda clean --all
-python -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 #test installation
 echo "test anaconda install: "

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # determine if mirror is used
-USING_MIRROR=True
+USING_MIRROR=true
 # mirror only used in mainland China
 if $USING_MIRROR; then
     if [ ! -f /etc/apt/sources.list.ubuntu ]; then

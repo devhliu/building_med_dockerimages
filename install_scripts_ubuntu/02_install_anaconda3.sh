@@ -11,7 +11,7 @@ fi
 echo -n "installing anaconda3..." #-n without newline
 
 # determine if mirror is used
-USING_MIRROR=True
+USING_MIRROR=true
 
 DEST=$1
 mkdir -p $DEST
@@ -28,7 +28,7 @@ else
     REPO_URL=https://repo.continuum.io/archive
 fi
 
-INST_FILE=Anaconda3-2019.10-Linux-x86_64.sh
+INST_FILE=Anaconda3-2020.07-Linux-x86_64.sh
 #-P: prefix, where there file will be save to
 wget -nv -P $ANACONDA3_DIR --tries=10 $REPO_URL/$INST_FILE 
 #-b:bacth mode, -f: no error if install prefix already exists
@@ -61,7 +61,7 @@ source $PROFILE
 # add conda mirror
 if $USING_MIRROR; then
 	SCRIPT_DIR=dirname $BASH_SOURCE
-    cp $SCRIPT_DIR/02_install_anaconda3_mirror.condarc $HOME/.condarc
+  cp $SCRIPT_DIR/02_install_anaconda3_mirror.condarc $HOME/.condarc
 	python -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 fi
 conda update --all
@@ -77,3 +77,6 @@ if [ $? -eq 0 ]; then
 else
     echo 'FAIL.'
 fi
+
+# install 3rd party packages
+conda install -c https://conda.anaconda.org/mrtrix3 mrtrix3

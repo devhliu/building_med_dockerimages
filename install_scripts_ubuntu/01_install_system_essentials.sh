@@ -20,6 +20,10 @@ fi
 # update system
 apt-get update && apt-get upgrade
 
+# install the dev packages for toolkits compile.
+apt-get install linux-headers-$(uname -r)
+apt install build-essential
+
 # intel opencl
 #add-apt-repository ppa:intel-opencl/intel-opencl
 #apt-get update

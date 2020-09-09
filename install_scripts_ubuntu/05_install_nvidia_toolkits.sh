@@ -33,5 +33,16 @@ export LD_LIBRARY_PATH=/usr/local/cuda-11.0/lib64:$LD_LIBRARY_PATH
 # register and manual the cuDNN runtime library
 sudo dpkg -i libcudnn7_7.6.5.32-1+cuda10.1_amd64.deb
 
+#------------------ install nvidia-docker2 ------------------------------------#
+# see ref 21_install_dockerce.sh
+
+#------------------ install clara-train-sdk -----------------------------------#
+# clara-train-sdk-v3
+docker login nvcr.io
+#Username: $oauthtoken
+#Password: xxxxxxxxxxx
+docker pull nvcr.io/nvidia/clara-train-sdk:v3.0
+
+
 
 

@@ -40,11 +40,15 @@ apt-get purge nvidia-docker
 distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
 curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
 curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
-apt-get update && sudo apt-get install -y nvidia-container-toolkit
+apt-get update
+apt-get install -y nvidia-container-toolkit
 apt-get update
 apt-get install -y nvidia-docker2
 systemctl restart docker
 
 # to run docker without sudo
-sudo usermod -a -G docker ubuntu # and then log out and back in
+groupadd docker
+usermod -a -G docker $USER # and then log out and back in
 systemctl restart docker
+chown "$USER":"$USER" /home/"$USER"/.docker -R
+chmod g+rwx "$HOME/.docker" -R

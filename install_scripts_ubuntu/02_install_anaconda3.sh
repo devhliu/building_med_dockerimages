@@ -1,39 +1,35 @@
 #!/bin/bash
 
-# check install path
+# check install path then make one if not exist
 if [ "$#" -lt 1 ]; then
-	echo "Usage: $0 <install folder (absolute path)>"
+	echo "Usage: $0 <install folder (absolute path)> $1 <force or not>"
 	echo "For sudoer recommend: $0 /opt"
 	echo "For normal user recommend: $0 $HOME/app"
 	exit 0
 fi
-
-echo -n "installing anaconda3..." #-n without newline
-
-# determine if mirror is used
-USING_MIRROR=true
-
 DEST=$1
 mkdir -p $DEST
 
+# environments and settings
 ANACONDA3_DIR=$DEST/anaconda3
+ANACONDA3_INST_FILE=Anaconda3-2020.07-Linux-x86_64.sh
+USING_MIRROR=true
+if $USING_MIRROR; then
+    ANACONDA3_REPO_URL=https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive
+else
+    ANACONDA3_REPO_URL=https://repo.continuum.io/archive
+fi
 if [ -d $ANACONDA3_DIR ]; then
 	rm -rf $ANACONDA3_DIR
 fi
 
-# install anaconda3
-if $USING_MIRROR; then
-    REPO_URL=https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive
-else
-    REPO_URL=https://repo.continuum.io/archive
-fi
-
-INST_FILE=Anaconda3-2020.07-Linux-x86_64.sh
+echo -n "installing anaconda3..." #-n without newline
+# download anaconda3
 #-P: prefix, where there file will be save to
-wget -nv -P $ANACONDA3_DIR --tries=10 $REPO_URL/$INST_FILE 
-#-b:bacth mode, -f: no error if install prefix already exists
-bash $ANACONDA3_DIR/$INST_FILE -b -f -p $ANACONDA3_DIR
-rm $ANACONDA3_DIR/$INST_FILE
+wget -nv -P $ANACONDA3_DIR --tries=10 $ANACONDA3_REPO_URL/$ANACONDA3_INST_FILE
+#-b: bacth mode, -f: no error if install prefix already exists
+bash $ANACONDA3_DIR/$ANACONDA3_INST_FILE -b -f -p y
+rm $ANACONDA3_DIR/$ANACONDA3_INST_FILE
 
 # using user profile
 if [ -e $HOME/.profile ]; then #ubuntu
@@ -55,13 +51,17 @@ else
 	echo "ANACONDA3_DIR=$ANACONDA3_DIR"
 	echo "export PATH=$ANACONDA3_DIR/bin:\$PATH" >> $PROFILE
 fi
-
 source $PROFILE
 
 # add conda mirror
 if $USING_MIRROR; then
-	SCRIPT_DIR=dirname $BASH_SOURCE
-  cp $SCRIPT_DIR/02_install_anaconda3_mirror.condarc $HOME/.condarc
+	echo "ssl_verify: true" >> $HOME/.condarc
+	echo "channels:" >> $HOME/.condarc
+	echo "  - defaults" >> $HOME/.condarc
+	echo "show_channel_urls: true" >> $HOME/.condarc
+	echo "channel_alias: https://mirrors.tuna.tsinghua.edu.cn/anaconda" >> $HOME/.condarc
+	echo "default_channels:" >> $HOME/.condarc
+	echo "  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main" >> $HOME/.condarc
 	python -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 fi
 conda update --all

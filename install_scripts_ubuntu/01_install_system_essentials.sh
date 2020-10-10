@@ -13,7 +13,7 @@ if $USING_MIRROR; then
     echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse" | tee -a /etc/apt/sources.list
     echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse" | tee -a /etc/apt/sources.list
     echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse" | tee -a /etc/apt/sources.list
-    echo "# end of mirror source from TUNA"
+    echo "# end of mirror source from TUNA" > /etc/apt/sources.list
     cp /etc/apt/sources.list /etc/apt/sources.list.tuna
 fi
 

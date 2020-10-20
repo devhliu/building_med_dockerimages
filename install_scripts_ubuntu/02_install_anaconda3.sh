@@ -79,4 +79,18 @@ else
 fi
 
 # install 3rd party packages
-conda install -c https://conda.anaconda.org/mrtrix3 mrtrix3
+
+# mrtrix3
+# conda install -c https://conda.anaconda.org/mrtrix3 mrtrix3
+wget https://github.com/MRtrix3/mrtrix3/releases/download/3.0.2/conda-linux-mrtrix3-3.0.2-h6bb024c_0.tar.bz2
+conda install conda-linux-mrtrix3-3.0.2-h6bb024c_0.tar.bz2
+rm conda-linux-mrtrix3-3.0.2-h6bb024c_0.tar.bz2
+
+# dipy
+pip install dipy
+pip install antspyx
+
+# deep learning
+pip install torch==1.6.0+cu101 torchvision==0.7.0+cu101 -f https://download.pytorch.org/whl/torch_stable.html
+pip install tensorflow==2.3.1
+

@@ -1,11 +1,19 @@
 #!/bin/bash
 #-----------------------------------------------------------------------------------------------------------------------
 #
-# install gate on docker
+# install clara on docker
 #
 #-----------------------------------------------------------------------------------------------------------------------
 
-docker pull opengatecollaboration/gate:8.2
+# install clara-train-sdk
+export claratrainsdk=nvcr.io/nvidia/clara-train-sdk:v3.0
+docker pull $claratrainsdk
 
-# run the gate docker
-docker run -it opengatecollaboration/gate:8.2
+docker run -it --rm --gpus all --shm-size=1G --ulimit memlock=-1 --ulimit stack=67108864 -v /home/hliu/workspace/clara/experiments:/workspace/clara-experiments $claratrainsdk /bin/bash
+
+# download models
+ngc registry model list nvidia/med/*
+
+MODEL_NAME=clara_train_deepgrow_aiaa_inference_only
+VERSION=1
+ngc registry model download-version nvidia/med/$MODEL_NAME:$VERSION --dest /workspace/clara-experiments/nv-models

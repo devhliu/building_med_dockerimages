@@ -26,7 +26,7 @@ fi
 /usr/bin/nvidia-uninstall
 
 NVIDIA_CUDA_RUNFILE=$1
-$NVIDIA_CUDA_RUNFILE accept
+sh $NVIDIA_CUDA_RUNFILE
 
 # get PROFILE
 if [ -e $HOME/.profile ]; then #ubuntu

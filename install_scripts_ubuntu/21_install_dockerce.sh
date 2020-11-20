@@ -50,5 +50,6 @@ systemctl restart docker
 groupadd docker
 usermod -a -G docker $USER # and then log out and back in
 systemctl restart docker
+mkdir $HOME/.docker
 chown "$USER":"$USER" /home/"$USER"/.docker -R
 chmod g+rwx "$HOME/.docker" -R

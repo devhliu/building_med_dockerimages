@@ -29,3 +29,26 @@ apt install build-essential
 #apt-get update
 #apt-get install intel-opencl-icd
 #add-apt-repository --remove ppa:intel-opencl/intel-opencl
+
+# install Node.js LTS (v14.x)
+curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+apt-get install -y nodejs
+npm install -g configurable-http-proxy
+
+# https://ip-address:9090
+apt-get install cockpit cockpit-docker
+systemctl start cockpit.socket
+systemctl enable cockpit.socket
+
+# https://ip-address:10000
+apt --fix-broken install
+apt-get install libnet-ssleay-perl libauthen-pam-perl libio-pty-perl unzip
+wget http://prdownloads.sourceforge.net/webadmin/webmin_1.962_all.deb
+dpkg --install webmin_1.962_all.deb
+
+# install juypterhub
+pip install jupyterhub
+jupyterhub
+
+sudo adduser hliu
+sudo usermod -aG sudo hliu

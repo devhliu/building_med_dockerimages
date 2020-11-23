@@ -53,3 +53,9 @@ systemctl restart docker
 mkdir $HOME/.docker
 chown "$USER":"$USER" /home/"$USER"/.docker -R
 chmod g+rwx "$HOME/.docker" -R
+
+# add docker mirror
+vi /etc/docker/daemon.json
+# {"registry-mirrors":["https://reg-mirror.ailiyun.com/"]}
+systemctl daemon-reload
+systemctl restart docker
